@@ -1,0 +1,17 @@
+CREATE TABLE People (
+	Id int UNIQUE identity(1, 1),
+	Name nvarchar(200) NOT NULL,
+	Picture varbinary(max),
+	Height float(2),
+	Weight float(2),
+	Gender varchar(1) CHECK (Gender in('m', 'f')),
+	Birthdate datetime NOT NULL,
+	Biography nvarchar(max)
+)
+
+INSERT INTO People(Name, Height, Weight, Gender, Birthdate, Biography)
+VALUES	('Marto', 65.222, 188.2333, 'm', '1999-04-02', 'I am almost 18 years old.'),
+		('Vanto', 60.2, 175.2, 'm', '1999-12-23', 'I am Martins nightmare.'),
+		('Pinio', 60.8, 173.12, 'm', '1999-01-15', 'I am 18 years old now.'),
+		('Lapeto', 58.3, 185.43, 'm', '2000-05-23', 'I am so smart.'),
+		('Mishel', 60.8, 185.54, 'f', '1999-05-23', 'I am the only girl here.')

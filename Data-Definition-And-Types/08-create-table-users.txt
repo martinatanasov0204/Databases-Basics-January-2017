@@ -1,0 +1,15 @@
+CREATE TABLE Users (
+	Id BIGINT UNIQUE NOT NULL IDENTITY(1,1),
+	Username varchar(30) UNIQUE NOT NULL,
+	Password varchar(26) NOT NULL,
+	ProfilePicture varbinary(max) CHECK (DATALENGTH(ProfilePicture) < 900 * 1024),
+	LastLoginTime date,
+	IsDeleted bit
+)
+
+INSERT INTO Users(Username, Password)
+VALUES	('pesho', '123'),
+		('gosho', '456'),
+		('minio', '123'),
+		('someone', '456'),
+		('test', '123')

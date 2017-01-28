@@ -1,0 +1,57 @@
+CREATE TABLE Directors (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	DirectorName nvarchar(255) NOT NULL,
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Genres (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	GenreName nvarchar(255) NOT NULL,
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Categories (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	CategoryName nvarchar(255) NOT NULL,
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Movies (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	Title nvarchar(255) NOT NULL,
+	DirectorId int NOT NULL FOREIGN KEY REFERENCES Directors(Id),
+	CopyrightYear int NOT NULL,
+	Length float(2) NOT NULL,
+	GenreId int NOT NULL FOREIGN KEY REFERENCES Genres(Id),
+	CategoryId int NOT NULL FOREIGN KEY REFERENCES Categories(Id),
+	Rating float(1),
+	Notes nvarchar(max)
+)
+
+INSERT INTO Directors(DirectorName)
+VALUES  ('Martin Atanasov'),
+		('Ivan Petrov'),
+		('Petio Petkov'),
+		('Kamen Milenov'),
+		('Vasil Martinov')
+
+INSERT INTO Genres(GenreName)
+VALUES  ('Romance'),
+		('Trailer'),
+		('Action'),
+		('Fantasy'),
+		('Criminal')
+
+INSERT INTO Categories(CategoryName)
+VALUES  ('Beach party movie'),
+		('Mystery movie'),
+		('Functional movie'),
+		('Home movie'),
+		('Comedy-Drama movie')
+
+INSERT INTO Movies(Title, DirectorId, CopyrightYear, Length, GenreId, CategoryId, Rating)
+VALUES  ('The Marine', 3, 2007, 120, 3, 3, 7.3),
+		('The Choice', 2, 2016, 116, 1, 2, 9.5),
+		('Fast And Furious 7', 1, 2015, 124, 3, 1, 8.7),
+		('The Whole Truth', 4, 2016, 140, 1, 5, 6.9),
+		('Avatar', 5, 2010, 165, 4, 2, 7.1)

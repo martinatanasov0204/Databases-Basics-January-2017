@@ -1,0 +1,87 @@
+CREATE TABLE Categories (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	Category nvarchar(200) NOT NULL,
+	DailyRate int NOT NULL,
+	WeeklyRate int NOT NULL,
+	MonthlyRate int NOT NULL,
+	WeekendRate int NOT NULL,
+)
+
+CREATE TABLE Cars (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	PlateNumber nvarchar(200) NOT NULL UNIQUE,
+	Make nvarchar(200) NOT NULL,
+	Model nvarchar(200) NOT NULL,
+	CarYear int NOT NULL,
+	CategoryId int FOREIGN KEY REFERENCES Categories(Id) NOT NULL,
+	Doors int NOT NULL,
+	Picture varbinary(max),
+	Condition nvarchar(200),
+	Available bit
+)
+
+CREATE TABLE Employees (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	FirstName nvarchar(200) NOT NULL,
+	LastName nvarchar(200) NOT NULL,
+	Title nvarchar(200),
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Customers (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	DriverLicenceNumber nvarchar(200) UNIQUE,
+	FullName nvarchar(200) NOT NULL,
+	Address nvarchar(200) NOT NULL,
+	City nvarchar(50) NOT NULL,
+	ZIPCode int NOT NULL,
+	Notes nvarchar(max)
+)
+
+CREATE TABLE RentalOrders (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	EmployeeId int FOREIGN KEY REFERENCES Employees(Id) NOT NULL,
+	CustomerId int FOREIGN KEY REFERENCES Customers(Id) NOT NULL,
+	CarId  int FOREIGN KEY REFERENCES Cars(Id) NOT NULL,
+	CarCondition nvarchar(50) NOT NULL,
+	TankLevel float(2) NOT NULL,
+	KilometrageStart int NOT NULL,
+	KilometrageEnd int NOT NULL,
+	TotalKilometrage int NOT NULL,
+	StartDate date NOT NULL,
+	EndDate date NOT NULL,
+	TotalDays int NOT NULL,
+	RateApplied int NOT NULL,
+	TaxRate int NOT NULL,
+	OrderStatus nvarchar(200) NOT NULL,
+	Notes nvarchar(max)
+)
+
+INSERT INTO Categories(Category, DailyRate, WeeklyRate, MonthlyRate, WeekendRate) 
+VALUES	('Car', 20, 100, 850, 60),
+		('Truck', 80, 400, 2000, 150),
+		('Jeep', 30, 120, 950, 90)
+
+INSERT INTO Cars(PlateNumber, Make, Model, CarYear, CategoryId, Doors, Condition, Available) 
+VALUES	('CT6560CK', 'Opel', 'Vectra', 1997, 1, 5, 'Used', 1),
+		('CT3032BC', 'Mitsubishi', 'Outlander', 2011, 3, 5, 'New', 1),
+		('CT1218AK', 'Mercedes', 'Spider', 2005, 2, 3, 'Used', 0)
+
+INSERT INTO Employees(FirstName, LastName, Title, Notes) 
+VALUES	('Ivan', 'Petrov', 'some title', 'i am the best'),
+		('Petio', 'Petkov', 'some title', 'i am not the best'),
+		('Konstantin', 'Aleksandrov', 'some title', 'some notes')
+
+INSERT INTO Customers(DriverLicenceNumber, FullName, Address, City, ZIPCode) 
+VALUES	(0542248723, 'Martin Atanasov', 'Mladost 3', 'Sofia', 4521),
+		(1125436572, 'Todor Petrov', 'Mladost 8', 'Sofia', 4521),
+		(7534543234, 'Ivanka Popova', 'Hristo Botev 14', 'Varna', 2323)
+
+INSERT INTO RentalOrders(EmployeeId, CustomerId, CarId, 
+						CarCondition, TankLevel, KilometrageStart, 
+						KilometrageEnd, TotalKilometrage,
+						StartDate, EndDate, TotalDays, 
+						RateApplied, TaxRate, OrderStatus) 
+VALUES	(1, 2, 2, 'some condition', 45, 0, 3000, 163000, '2016-12-01', '2017-01-05', 25, 5, 500, 'Done'),
+		(2, 3, 3, 'some condition', 50, 0, 500, 142000, '2016-12-05', '2016-12-07', 2, 7, 100, 'Done'),
+		(1, 3, 2, 'some condition', 10, 0, 100, 158000, '2016-11-14', '2016-11-15', 1, 6, 50, 'Done')

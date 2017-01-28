@@ -1,0 +1,109 @@
+CREATE TABLE Employees (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	FirstName nvarchar(200) NOT NULL,
+	LastName nvarchar(200) NOT NULL,
+	Title nvarchar(200),
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Customers(
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	AccountNumber nvarchar(200) UNIQUE,
+	FirstName nvarchar(200) NOT NULL,
+	LastName nvarchar(200) NOT NULL,
+	PhoneNumber nvarchar(50) NOT NULL,
+	EmergencyName nvarchar(50) NOT NULL,
+	EmergencyNumber nvarchar(50) NOT NULL,
+	Notes nvarchar(max)
+)
+
+CREATE TABLE RoomStatus(
+	RoomStatus nvarchar(200),
+	Notes nvarchar(max)
+)
+
+CREATE TABLE RoomTypes(
+	RoomType nvarchar(200),
+	Notes nvarchar(max)
+)
+
+CREATE TABLE BedTypes(
+	BedType nvarchar(200),
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Rooms(
+	RoomNumber int UNIQUE,
+	RoomType nvarchar(200),
+	BedType nvarchar(200),
+	Rate float(2),
+	RoomStatus nvarchar(200),
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Payments(
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	EmployeeId nvarchar(200) NOT NULL UNIQUE,
+	PaymentDate date NOT NULL,
+	AccountNumber nvarchar(200) NOT NULL UNIQUE,
+	FirstDateOccupied date NOT NULL,
+	LastDateOccupied date NOT NULL,
+	TotalDays int NOT NULL,
+	AmountCharged float(2) NOT NULL,
+	TaxRate float(2) NOT NULL,
+	TaxAmount float(2) NOT NULL,
+	PaymentTotal float(2) NOT NULL,
+	Notes nvarchar(max)
+)
+
+CREATE TABLE Occupancies (
+	Id int NOT NULL IDENTITY(1,1) UNIQUE,
+	EmployeeId nvarchar(200) NOT NULL UNIQUE,
+	DateOccupied date NOT NULL,
+	AccountNumber nvarchar(200) NOT NULL UNIQUE,
+	RoomNumber int,
+	RateApplied float(2),
+	PhoneCharge nvarchar(200),
+	Notes nvarchar(max)
+)
+
+INSERT INTO Employees(FirstName, LastName, Title, Notes) 
+VALUES	('Petar', 'Petrov', 'some title', 'some notes'),
+		('Ivan', 'Popov', 'some title', 'some notes'),
+		('Konstantin', 'Marinov', 'some title', 'some notes')
+
+INSERT INTO Customers(AccountNumber, FirstName, LastName, PhoneNumber, EmergencyName, EmergencyNumber) 
+VALUES	('32432543528', 'Gosho', 'Georgiev', '089545327', 'name', '684654'),
+		('87683645657', 'Pesho', 'Kolev', '0895467983', 'EmName', '431231'),
+		('65735233254', 'Qvor', 'Qnakiev', '0898745120', 'name', '4651322')
+
+INSERT INTO RoomStatus (RoomStatus, Notes) 
+VALUES	('Free', 'For a couple'),
+		('Free', 'For a big family'),
+		('Reserved', 'For teenagers')
+
+INSERT INTO RoomTypes (RoomType) 
+VALUES	('1 bedroom room'),
+		('2 bedroom apartment'),
+		('3 bedroom apartment')
+
+INSERT INTO BedTypes (BedType) 
+VALUES	('For 1 person'),
+		('For 2 people'),
+		('For a baby')
+
+INSERT INTO Rooms (RoomNumber, RoomType, BedType, Rate, RoomStatus)
+VALUES	(123, 'For a couple', 'for 2 people', 5.6, 'available'),
+		(456, 'For a big family', 'for 6 people', 8.5, 'available'),
+		(789, 'For teenagers', 'for 4 people', 6.0, 'unavailable')
+
+INSERT INTO Payments (EmployeeId, PaymentDate, AccountNumber, FirstDateOccupied, 
+					LastDateOccupied, TotalDays, AmountCharged, TaxRate, TaxAmount, PaymentTotal)
+VALUES	(53453, '2016-04-13', '543543223123', '2016-04-13', '2016-04-18', 5, 20, 80, 160, 500),
+		(66765, '2016-05-19', '768654278673', '2016-05-23', '2016-05-29', 6, 30, 100, 180, 700),
+		(34248, '2016-03-06', '756643523423', '2016-03-10', '2016-03-18', 8, 40, 120, 190, 900)
+
+INSERT INTO Occupancies  (EmployeeId, DateOccupied, AccountNumber, RoomNumber, RateApplied, PhoneCharge)
+VALUES	(76534548, '2016-04-13', '543543223123', 123, 5.6, 10),
+		(76587684, '2016-04-18', '867546452343', 456, 8.2, 0),
+		(23436547, '2016-05-25', '768675464563', 789, 6.4, 20)
