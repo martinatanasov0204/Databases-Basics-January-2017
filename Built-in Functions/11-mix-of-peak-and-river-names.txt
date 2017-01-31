@@ -1,0 +1,4 @@
+SELECT PeakName, RiverName, lower(PeakName) + lower(SUBSTRING(RiverName, 2, LEN(RiverName) - 1)) AS [Mix] 
+FROM Peaks, Rivers
+WHERE (lower(SUBSTRING(PeakName, LEN(PeakName), 1)) = lower(SUBSTRING(RiverName, 1, 1)))
+ORDER BY Mix

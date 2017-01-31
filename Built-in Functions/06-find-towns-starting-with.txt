@@ -1,0 +1,3 @@
+SELECT TownID, Name FROM Towns 
+WHERE (Name like 'M%' OR Name like 'K%' OR  Name like 'B%' OR  Name like 'E%')
+ORDER BY Name ASC
